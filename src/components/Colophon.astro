@@ -1,0 +1,147 @@
+---
+/**
+ * The colophon. In a printed report this is the page that says who made the
+ * book, on what press, and where the pictures came from. Here it carries the
+ * address, the social links, and the image credits, because a page built on
+ * archival photography should say where the photographs came from.
+ */
+import site from '../content/site.json';
+---
+
+<footer class="colophon">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <img src="/images/seal.png" alt="" width="72" height="72" class="seal" />
+        <p class="name">{site.name}</p>
+        <p class="tag">{site.tagline}</p>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Where we are</p>
+        <address>
+          {site.address.line1}<br />
+          {site.address.city}, {site.address.state} {site.address.zip}
+        </address>
+        <p class="note">The Main Library, and the foundation's address.</p>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Reach us</p>
+        <ul class="plain">
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={`mailto:${site.boardEmail}`}>{site.boardEmail}</a></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Follow</p>
+        <ul class="plain">
+          {site.social.map((s) => (
+            <li><a href={s.url} rel="noopener noreferrer" target="_blank">{s.name}</a></li>
+          ))}
+        </ul>
+        <p class="note">More channels can be added from the admin panel.</p>
+      </div>
+    </div>
+
+    <hr class="rule rule--ink" />
+
+    <div class="bottom">
+      <p>
+        Demo built for the Riverside Public Library Foundation. Content and mark taken from the
+        foundation's own site.
+      </p>
+      <p class="credits">
+        Plates: Riverside Public Library ca. 1910, California Historical Society, public domain.
+        Carnegie Public Library, New York Public Library, public domain. Downtown Riverside by Ken
+        Lund, CC BY-SA 2.0. Main Library photograph by the foundation.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .colophon {
+    background: var(--ink-deep);
+    color: var(--on-ink-soft);
+    padding-block: clamp(2.6rem, 6vw, 4.5rem) 2rem;
+    font-size: 0.92rem;
+  }
+  .top {
+    display: grid;
+    gap: 2rem clamp(1.5rem, 4vw, 3rem);
+    margin-bottom: 2.2rem;
+  }
+  @media (min-width: 820px) {
+    .top {
+      grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
+    }
+  }
+  .seal {
+    width: 58px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 0.9rem;
+  }
+  .name {
+    font-family: var(--display);
+    font-size: 1.12rem;
+    color: var(--on-ink);
+    line-height: 1.2;
+    max-width: 18ch;
+  }
+  .tag {
+    margin-top: 0.3rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: var(--brass-light);
+  }
+  .block .eyebrow {
+    margin-bottom: 0.7rem;
+  }
+  address {
+    font-style: normal;
+    line-height: 1.7;
+    color: var(--on-ink);
+  }
+  .note {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    opacity: 0.75;
+  }
+  .plain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .plain a {
+    color: var(--on-ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+    word-break: break-word;
+  }
+  .plain a:hover {
+    color: var(--brass-light);
+    border-bottom-color: var(--brass);
+  }
+  .bottom {
+    display: grid;
+    gap: 0.8rem;
+    padding-top: 1.6rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+  @media (min-width: 900px) {
+    .bottom {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 2rem;
+    }
+  }
+  .credits {
+    line-height: 1.6;
+  }
+</style>

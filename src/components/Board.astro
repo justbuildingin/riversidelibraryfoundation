@@ -1,0 +1,118 @@
+---
+/**
+ * The board, named. On a page asking for money this is not a courtesy, it is
+ * the evidence: these are the people accountable for it. Names come from the
+ * foundation's own board page.
+ */
+import board from '../content/board.json';
+---
+
+<section class="section board" id="board">
+  <div class="wrap">
+    <header class="head reveal">
+      <span class="figno">Fig. 07</span>
+      <h2>Who is accountable for it</h2>
+      <p class="prose sub">
+        A volunteer board of Riverside residents. No one on this list is paid out of what you give.
+      </p>
+    </header>
+
+    <div class="grid">
+      <ul class="officers" data-reveal-group>
+        {board.officers.map((o) => (
+          <li class="officer reveal">
+            <span class="o-name">{o.name}</span>
+            <span class="o-role">{o.role}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="rest reveal">
+        <p class="rest-label eyebrow">Directors</p>
+        <ul class="directors">
+          {board.directors.map((d) => <li>{d}</li>)}
+        </ul>
+        <p class="assistant">
+          {board.assistant.name}, <span>{board.assistant.role}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .board {
+    border-bottom: 1px solid var(--rule);
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+  }
+  .grid {
+    display: grid;
+    gap: clamp(1.8rem, 5vw, 3.5rem);
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  .officers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .officer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    align-items: baseline;
+    padding-block: 0.95rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .o-name {
+    font-family: var(--display);
+    font-size: 1.22rem;
+    letter-spacing: -0.015em;
+  }
+  .o-role {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .rest-label {
+    margin-bottom: 0.9rem;
+  }
+  .directors {
+    list-style: none;
+    margin: 0 0 1.4rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem 1.2rem;
+  }
+  .directors li {
+    font-size: 1rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .assistant {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+  .assistant span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+</style>

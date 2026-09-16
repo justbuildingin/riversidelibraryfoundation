@@ -1,0 +1,10 @@
+{
+  "officers": [
+    { "name": "Barbara Shackelton", "role": "President" },
+    { "name": "Cheryl Sautter-Konyn", "role": "CFO / Treasurer" },
+    { "name": "Shannon Kane", "role": "Secretary" },
+    { "name": "Susan Toscano", "role": "Past President" }
+  ],
+  "directors": ["Suzy Clem", "Tom Evans", "Brian Federici", "Julie Hartwigsen", "Janette Johnson", "Gretta Merwin", "Georgia Renne", "John Wahlin"],
+  "assistant": { "name": "Ray-chel Arenas", "role": "Assistant to the Board" }
+}

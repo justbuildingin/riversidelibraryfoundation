@@ -1,0 +1,154 @@
+---
+/**
+ * The eight. Every name and address comes from the City of Riverside's own
+ * listing, because naming a real institution's branches wrongly is the kind of
+ * error a shareholder spots immediately.
+ */
+import branches from '../content/branches.json';
+---
+
+<section class="section libraries" id="libraries">
+  <div class="band" aria-hidden="true">
+    <picture>
+      <source type="image/webp" srcset="/images/downtown-riverside-1600.webp 1600w, /images/downtown-riverside-2400.webp 2400w" sizes="100vw" />
+      <img src="/images/downtown-riverside-1600.jpg" alt="" width="2400" height="1800" loading="lazy" decoding="async" />
+    </picture>
+  </div>
+
+  <div class="wrap inner">
+    <header class="head reveal">
+      <span class="figno">Fig. 04</span>
+      <h2>Eight libraries, one city</h2>
+      <p class="prose sub">
+        The foundation raises for all of them. Not a headquarters and seven afterthoughts: the
+        branch closest to a child is the one that decides whether they read.
+      </p>
+    </header>
+
+    <ol class="list" data-reveal-group>
+      {branches.map((b, i) => (
+        <li class={`row reveal${b.flagship ? ' row--flag' : ''}`}>
+          <span class="num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="name">{b.name}</span>
+          <span class="addr">{b.street}</span>
+          <span class="tel"><a href={`tel:+1${b.phone.replace(/\D/g, '')}`}>{b.phone}</a></span>
+          {b.note ? <span class="note">{b.note}</span> : <span class="note" aria-hidden="true"></span>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .libraries {
+    position: relative;
+    background: var(--ink);
+    color: var(--on-ink);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* The photograph is texture here, not subject: heavily dimmed so the list
+     stays the thing you read. */
+  .band {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .band img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.16;
+  }
+  .libraries::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, var(--ink) 0%, rgba(13, 34, 51, 0.82) 40%, var(--ink) 100%);
+  }
+
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+    color: var(--white);
+  }
+  .sub {
+    color: var(--on-ink-soft);
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule-ink);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.2rem 1rem;
+    padding-block: 1.15rem;
+    border-bottom: 1px solid var(--rule-ink);
+    align-items: baseline;
+    transition: background-color var(--fast) var(--ease), padding-inline var(--fast) var(--ease);
+  }
+  .row:hover {
+    background: rgba(242, 238, 226, 0.04);
+    padding-inline: 0.7rem;
+  }
+  @media (min-width: 880px) {
+    .row {
+      grid-template-columns: 3.2rem minmax(0, 1.25fr) minmax(0, 1fr) 9rem;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .note {
+      grid-column: 2 / -1;
+    }
+  }
+  .num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+  .name {
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 2vw, 1.4rem);
+    letter-spacing: -0.015em;
+    color: var(--white);
+  }
+  .addr {
+    font-size: 0.92rem;
+    color: var(--on-ink-soft);
+  }
+  .tel a {
+    font-size: 0.92rem;
+    color: var(--on-ink-soft);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .tel a:hover {
+    color: var(--brass-light);
+  }
+  .note {
+    font-size: 0.86rem;
+    color: var(--citrus);
+    line-height: 1.5;
+  }
+  .note:empty {
+    display: none;
+  }
+  /* The Main Library carries the foundation's own address, so it gets the one
+     mark of emphasis in the list. */
+  .row--flag .name {
+    color: var(--brass-light);
+  }
+</style>

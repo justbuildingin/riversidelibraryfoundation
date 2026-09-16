@@ -1,0 +1,15 @@
+{
+  "intro": "Take a moment to explore the things we have done for residents and Riverside libraries.",
+  "items": [
+    { "figure": "200000", "prefix": "$", "label": "raised toward the new Orange Terrace Library", "detail": "A branch that did not exist before the community paid for it." },
+    { "figure": "1", "prefix": "", "label": "READy-Set-Go Storymobile, funded", "detail": "Books go to the neighbourhood when the neighbourhood cannot come to the library." },
+    { "figure": "8", "prefix": "", "label": "libraries supported across Riverside", "detail": "The Main Library and seven branches, from Arlanza to Orange Terrace." },
+    { "figure": "5", "prefix": "", "label": "year Literary Legacy Program", "detail": "Committed giving that lets the library plan past the current budget year." }
+  ],
+  "programs": [
+    { "title": "Story Time Kits", "body": "Provided Story Time Kits for daycare providers, so a child's first library is sometimes the room they are already in." },
+    { "title": "On-line homework help", "body": "On-line homework help for Riverside students, available at the hour homework actually happens." },
+    { "title": "Casa Blanca Family Learning Center", "body": "Provided furnishings and artwork for the Family Learning Center, because a room people want to sit in gets used." },
+    { "title": "Eastside computers", "body": "Provided the computers for the Eastside library, for the households that do not have one." }
+  ]
+}

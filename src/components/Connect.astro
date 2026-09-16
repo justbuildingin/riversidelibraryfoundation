@@ -1,0 +1,212 @@
+---
+/**
+ * Newsletter, contact and the news the admin staff will post.
+ *
+ * The updates come from src/content/updates/, one JSON file each, which is
+ * exactly what the CMS writes. Nothing here is typed into the component, so
+ * "admin staff can post updates" is a claim the architecture actually supports.
+ */
+import site from '../content/site.json';
+
+const files = import.meta.glob('../content/updates/*.json', { eager: true }) as Record<
+  string,
+  { default: { title: string; date: string; summary: string; tag: string } }
+>;
+const updates = Object.values(files)
+  .map((m) => m.default)
+  .sort((a, b) => (a.date < b.date ? 1 : -1))
+  .slice(0, 3);
+
+const dateOf = (iso: string) =>
+  new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+---
+
+<section class="section connect" id="connect">
+  <div class="wrap">
+    <div class="grid">
+      <div class="news">
+        <header class="head reveal">
+          <span class="figno">Fig. 08</span>
+          <h2>From the foundation</h2>
+        </header>
+        <ul class="updates" data-reveal-group>
+          {updates.map((u) => (
+            <li class="update reveal">
+              <p class="u-meta">
+                <span class="u-tag">{u.tag}</span>
+                <time datetime={u.date}>{dateOf(u.date)}</time>
+              </p>
+              <h3>{u.title}</h3>
+              <p class="u-sum">{u.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="forms">
+        <form
+          class="card reveal"
+          name="newsletter"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="company"
+          action="/thank-you/?kind=newsletter"
+        >
+          <input type="hidden" name="form-name" value="newsletter" />
+          <p class="hp" hidden><label>Do not fill this in <input name="company" /></label></p>
+          <p class="card-title">The newsletter</p>
+          <p class="card-sub">
+            What the money did, a few times a year. No appeals between campaigns.
+          </p>
+          <div class="field">
+            <label for="n-email">Email</label>
+            <input id="n-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="n-name">First name</label>
+            <input id="n-name" name="first_name" autocomplete="given-name" />
+          </div>
+          <button class="btn btn--ink" type="submit"><span>Subscribe</span></button>
+        </form>
+
+        <form
+          class="card reveal"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="company"
+          action="/thank-you/?kind=contact"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hp" hidden><label>Do not fill this in <input name="company" /></label></p>
+          <p class="card-title">Write to the foundation</p>
+          <div class="field">
+            <label for="c-name">Name</label>
+            <input id="c-name" name="name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="c-email">Email</label>
+            <input id="c-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="c-subject">About</label>
+            <select id="c-subject" name="subject">
+              <option>A donation</option>
+              <option>The Literary Legacy Program</option>
+              <option>Corporate or foundation giving</option>
+              <option>Volunteering</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" name="message" rows="3" required></textarea>
+          </div>
+          <button class="btn btn--ink" type="submit"><span>Send</span></button>
+          <p class="fine">Or write directly to {site.email}.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .connect {
+    border-bottom: 1px solid var(--rule);
+  }
+  .grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  @media (min-width: 980px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    }
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+  }
+  .head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+  }
+  .updates {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .update {
+    padding-block: 1.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .u-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .u-tag {
+    font-weight: 700;
+    color: var(--ink-deep);
+    background: var(--citrus);
+    padding: 0.14rem 0.5rem;
+    border-radius: 2px;
+  }
+  .update h3 {
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    margin-bottom: 0.4rem;
+  }
+  .u-sum {
+    color: var(--text-soft);
+    max-width: 56ch;
+  }
+
+  .forms {
+    display: grid;
+    gap: 1.2rem;
+    align-content: start;
+  }
+  .card {
+    border: 1px solid var(--rule);
+    background: var(--white);
+    padding: clamp(1.3rem, 3vw, 1.9rem);
+    display: grid;
+    gap: 1rem;
+  }
+  .card-title {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    letter-spacing: -0.015em;
+  }
+  .card-sub {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    margin-top: -0.5rem;
+  }
+  .card .btn {
+    justify-self: start;
+  }
+  textarea {
+    resize: vertical;
+    font-family: var(--sans);
+  }
+  .fine {
+    font-size: 0.82rem;
+    color: var(--text-soft);
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+</style>

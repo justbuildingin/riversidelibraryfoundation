@@ -1,0 +1,98 @@
+---
+/**
+ * 1910 beside today. Two photographs, one argument: the city has been doing
+ * this for a hundred and twenty years, and the building it opened in 2021 is
+ * the same commitment in a different material.
+ *
+ * This is the one place the grid is allowed to break, and only the photographs
+ * are allowed to break it.
+ */
+---
+
+<section class="section heritage" id="heritage">
+  <div class="wrap">
+    <header class="head reveal">
+      <span class="figno">Fig. 03</span>
+      <h2>A hundred and twenty years of the same idea</h2>
+    </header>
+
+    <div class="pair">
+      <figure class="then reveal">
+        <picture>
+          <source type="image/webp" srcset="/images/carnegie-postcard-900.webp 900w, /images/carnegie-postcard-1400.webp 1400w" sizes="(min-width: 900px) 46vw, 92vw" />
+          <img src="/images/carnegie-postcard-900.jpg" alt="A printed view of the Carnegie Public Library in Riverside, California." width="1400" height="880" loading="lazy" decoding="async" />
+        </picture>
+        <figcaption><span class="figno">Then</span> The Carnegie library, paid for by a steel fortune and a city that wanted one.</figcaption>
+      </figure>
+
+      <figure class="now reveal">
+        <picture>
+          <source type="image/webp" srcset="/images/main-library-today-605.webp 605w, /images/main-library-today-1100.webp 1100w" sizes="(min-width: 900px) 38vw, 92vw" />
+          <img src="/images/main-library-today-605.jpg" alt="The Riverside Main Library at 3900 Mission Inn Avenue, a cantilevered stone building above a red street-level volume at dusk." width="605" height="680" loading="lazy" decoding="async" />
+        </picture>
+        <figcaption><span class="figno">Now</span> The Main Library, 3900 Mission Inn Avenue. Opened 2021.</figcaption>
+      </figure>
+
+      <div class="note reveal">
+        <p class="prose">
+          Andrew Carnegie funded sixteen hundred libraries on one condition: that the town pay to
+          keep them running, forever. Riverside said yes. Everything this foundation does is the
+          modern half of that bargain, which never actually ends.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .heritage {
+    border-bottom: 1px solid var(--rule);
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: clamp(2rem, 5vw, 3.2rem);
+  }
+  .head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+    max-width: 20ch;
+  }
+
+  .pair {
+    display: grid;
+    gap: clamp(1.6rem, 4vw, 2.6rem);
+  }
+  @media (min-width: 900px) {
+    .pair {
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      align-items: start;
+    }
+    /* The modern plate steps down and overlaps the baseline of the archival
+       one: the only break in the grid on the page. */
+    .now {
+      margin-block-start: 4.5rem;
+    }
+    .note {
+      grid-column: 1;
+      max-width: 44ch;
+    }
+  }
+  figure {
+    margin: 0;
+  }
+  figure img {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 24px 60px rgba(13, 34, 51, 0.18);
+  }
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.85rem;
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    max-width: 38ch;
+  }
+</style>

@@ -1,0 +1,10 @@
+[
+  { "name": "Main Library", "street": "3900 Mission Inn Ave.", "phone": "(951) 826-5201", "note": "Opened 2021. The foundation's home address.", "flagship": true },
+  { "name": "Arlanza Library", "street": "8267 Philbin Ave.", "phone": "(951) 826-2217", "note": "" },
+  { "name": "Arlington Library", "street": "9556 Magnolia Ave.", "phone": "(951) 826-2291", "note": "" },
+  { "name": "La Sierra Library", "street": "4600 La Sierra Ave.", "phone": "(951) 826-2461", "note": "" },
+  { "name": "Marcy Library", "street": "6927 Magnolia Ave.", "phone": "(951) 826-2078", "note": "" },
+  { "name": "Orange Terrace Library", "street": "20010-B Orange Terrace Pkwy.", "phone": "(951) 826-2184", "note": "The foundation raised roughly $200,000 toward this building." },
+  { "name": "SPC. Jesus S. Duran Eastside Library", "street": "4261 Park Ave.", "phone": "(951) 826-2235", "note": "The foundation provided its computers." },
+  { "name": "SSgt. Salvador J. Lara Casa Blanca Library", "street": "2985 Madison St.", "phone": "(951) 826-2120", "note": "The foundation provided furnishings and artwork for the Family Learning Center." }
+]

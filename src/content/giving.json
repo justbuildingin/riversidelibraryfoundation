@@ -1,0 +1,14 @@
+{
+  "intro": "Every gift goes to the Riverside Public Library. The foundation exists to make sure it gets there.",
+  "note": "Suggested amounts for this demo. The foundation's published giving levels should replace these before launch.",
+  "tiers": [
+    { "amount": 25,  "monthly": 5,   "name": "Borrower",    "buys": "A new picture book on a branch shelf" },
+    { "amount": 100, "monthly": 10,  "name": "Card Holder", "buys": "A Story Time Kit for a daycare provider" },
+    { "amount": 500, "monthly": 45,  "name": "Patron",      "buys": "A month of on-line homework help" },
+    { "amount": 1500,"monthly": 125, "name": "Benefactor",  "buys": "A shelf of e-books the whole city can borrow at once", "featured": true }
+  ],
+  "legacy": {
+    "title": "Literary Legacy Program",
+    "body": "A five year commitment that lets the library plan beyond the current budget year. Most of what a library does well, it does slowly."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Leaves, Literature & Libraries",
+  "year": "2026",
+  "kicker": "2026 Annual Fundraiser",
+  "date": "2026-11-13T18:30:00-08:00",
+  "dateLabel": "Friday, November 13th, 2026",
+  "timeLabel": "6:30 p.m. to 8:30 p.m.",
+  "venue": "Orange Terrace Library",
+  "venueAddress": "20010 Orange Terrace Parkway, Riverside",
+  "price": 150,
+  "priceLabel": "$150 per person",
+  "rsvpBy": "2026-10-23T23:59:00-07:00",
+  "rsvpByLabel": "October 23rd, 2026",
+  "blurb": "A casual and engaging evening to raise funds to support the library's yearly budget for printed books, e-books, e-audio books, and e-materials.",
+  "includes": ["Appetizers and desserts", "Paired with special wines and beer", "Raffles and silent auction"]
+}

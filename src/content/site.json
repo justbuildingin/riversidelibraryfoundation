@@ -1,0 +1,28 @@
+{
+  "name": "Riverside Public Library Foundation",
+  "shortName": "RPLF",
+  "tagline": "Guardians of a public education",
+  "missionShort": "The Riverside Public Library is not only about books and digital materials, it is the CENTER for lifelong learning.",
+  "missionLong": "The Riverside Public Library Foundation raises funds to ensure the excellence of library services for Riverside residents. Take a moment to explore the things we have done for residents and Riverside libraries. Then help us by donating.",
+  "address": {
+    "line1": "3900 Mission Inn Avenue",
+    "city": "Riverside",
+    "state": "CA",
+    "zip": "92501"
+  },
+  "email": "TreasurerRPLF@gmail.com",
+  "boardEmail": "RPLFboardassistant@gmail.com",
+  "social": [
+    { "name": "Facebook", "url": "https://www.facebook.com/RiversidePublicLibraryFoundation" }
+  ],
+  "legacyProgram": {
+    "name": "Literary Legacy Program",
+    "blurb": "Help us support Riverside's libraries through this 5-year fundraising program.",
+    "years": 5
+  },
+  "campaign": {
+    "year": "2026",
+    "name": "Lifelong Learning for an Informed & Healthy Riverside",
+    "blurb": "This year's funds will support programming inspired by Blue Zones research promoting longevity, social connection and purpose."
+  }
+}

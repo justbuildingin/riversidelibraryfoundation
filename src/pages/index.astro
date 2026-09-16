@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Impact from '../components/Impact.astro';
+import Heritage from '../components/Heritage.astro';
+import Libraries from '../components/Libraries.astro';
+import Giving from '../components/Giving.astro';
+import EventSection from '../components/EventSection.astro';
+import Board from '../components/Board.astro';
+import Connect from '../components/Connect.astro';
+import Colophon from '../components/Colophon.astro';
+import site from '../content/site.json';
+import impact from '../content/impact.json';
+
+const title = `${site.name} | Guardians of a public education in Riverside`;
+const description = site.missionLong;
+---
+
+<Base title={title} description={description}>
+  <Hero />
+
+  <!-- 01. The mission, set as a standfirst rather than a paragraph. -->
+  <section class="section mission" id="mission">
+    <div class="wrap">
+      <div class="mission-grid">
+        <div class="mission-label reveal">
+          <span class="figno">Fig. 01</span>
+          <span class="eyebrow">Our mission</span>
+        </div>
+        <div class="mission-body">
+          <p class="standfirst reveal">{site.missionShort}</p>
+          <div class="prose reveal">
+            <p>{site.missionLong}</p>
+            <p>{impact.intro}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Impact />
+  <Heritage />
+  <Libraries />
+  <Giving />
+  <EventSection />
+  <Board />
+  <Connect />
+  <Colophon />
+</Base>
+
+<style>
+  .mission {
+    border-bottom: 1px solid var(--rule);
+  }
+  .mission-grid {
+    display: grid;
+    gap: 1.6rem clamp(2rem, 6vw, 5rem);
+  }
+  @media (min-width: 900px) {
+    .mission-grid {
+      grid-template-columns: minmax(0, 0.34fr) minmax(0, 1fr);
+    }
+  }
+  .mission-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.5rem;
+  }
+  .mission-body {
+    display: grid;
+    gap: 1.6rem;
+  }
+</style>

@@ -1,0 +1,201 @@
+---
+/**
+ * Full-bleed hero: the 1903 Carnegie library, photographed around 1910,
+ * duotoned into the foundation's own blue.
+ *
+ * The archival plate is the whole argument. Before a visitor reads a word they
+ * should understand that this city has been funding a public library for over
+ * a century and that somebody is still minding it. The masthead navigation sits
+ * inside this composition rather than on a bar above it.
+ */
+import site from '../content/site.json';
+import event from '../content/event.json';
+---
+
+<section class="hero">
+  <figure class="plate" data-hero-figure>
+    <picture>
+      <source
+        type="image/webp"
+        srcset="/images/carnegie-1910-1200.webp 1200w, /images/carnegie-1910-1800.webp 1800w, /images/carnegie-1910-2600.webp 2600w"
+        sizes="100vw"
+      />
+      <img
+        src="/images/carnegie-1910-1800.jpg"
+        alt="The Riverside Carnegie public library photographed around 1910, a Mission Revival building with twin bell towers and an arcaded entrance."
+        width="2600"
+        height="2055"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
+  </figure>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="hero-inner wrap">
+    <div class="topline" data-hero-tail>
+      <p class="kicker">
+        <span>Riverside, California</span>
+        <span class="dot" aria-hidden="true">/</span>
+        <span>Est. for the public good</span>
+      </p>
+      <p class="plate-caption">
+        <span class="figno">Plate 01</span>
+        <span>The Carnegie library, Seventh Street, ca. 1910</span>
+      </p>
+    </div>
+
+    <hr class="hero-rule" data-hero-rule />
+
+    <h1 class="masthead">
+      <span class="ml"><span class="mi" data-hero-line>Guardians</span></span>
+      <span class="ml"><span class="mi" data-hero-line>of a public</span></span>
+      <span class="ml"><span class="mi ital" data-hero-line>education</span></span>
+    </h1>
+
+    <div class="tail">
+      <p class="lede" data-hero-tail>
+        Eight libraries serve the City of Riverside. The {site.name} is the reason
+        several of them have what they have.
+      </p>
+      <div class="acts" data-hero-tail>
+        <a class="btn btn--brass" href="#give"><span>Donate</span></a>
+        <a class="btn btn--outline" href="#event"><span>Reserve for {event.name}</span></a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-block: 7rem clamp(3rem, 7vw, 5rem);
+    overflow: hidden;
+    background: var(--ink-deep);
+    isolation: isolate;
+  }
+  .plate {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    z-index: -2;
+  }
+  .plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+  }
+  /*
+    Two scrims, not one. A single flat wash over a photograph reads as a grey
+    sheet; a vertical gradient plus a corner pool keeps the building's own
+    light in the frame while still guaranteeing contrast under the type.
+  */
+  .scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, rgba(8, 23, 34, 0.93) 0%, rgba(8, 23, 34, 0.66) 32%, rgba(8, 23, 34, 0.2) 58%, rgba(8, 23, 34, 0.42) 82%, rgba(8, 23, 34, 0.86) 100%),
+      radial-gradient(130% 78% at 16% 86%, rgba(8, 23, 34, 0.72), transparent 62%);
+  }
+
+  .hero-inner {
+    position: relative;
+    color: var(--on-ink);
+  }
+
+  .topline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem 2rem;
+    margin-bottom: 1.1rem;
+  }
+  .kicker {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brass-light);
+  }
+  .dot {
+    opacity: 0.55;
+  }
+
+  .hero-rule {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(to right, var(--brass) 0%, rgba(176, 141, 79, 0.35) 62%, transparent 100%);
+    margin: 0 0 clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .masthead {
+    font-size: clamp(2.9rem, 9.4vw, 8.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: var(--white);
+    max-width: 16ch;
+  }
+  .ml {
+    display: block;
+    overflow: hidden;
+  }
+  .mi {
+    display: block;
+  }
+  /* One word in italic optical size: the editorial tell, and it keeps a
+     three-line masthead from reading as three equal slabs. */
+  .ital {
+    font-style: italic;
+    font-variation-settings: 'SOFT' 22, 'WONK' 1;
+    color: var(--brass-light);
+  }
+
+  .tail {
+    display: grid;
+    gap: 1.6rem;
+    margin-top: clamp(1.6rem, 4vw, 2.6rem);
+  }
+  @media (min-width: 900px) {
+    .tail {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 2.5rem;
+    }
+  }
+  .lede {
+    font-size: clamp(1rem, 1.55vw, 1.16rem);
+    color: var(--on-ink-soft);
+    max-width: 44ch;
+  }
+  .acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .plate-caption {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: rgba(242, 238, 226, 0.78);
+    text-shadow: 0 1px 8px rgba(8, 23, 34, 0.9);
+  }
+  @media (max-width: 860px) {
+    .plate-caption {
+      display: none;
+    }
+  }
+</style>

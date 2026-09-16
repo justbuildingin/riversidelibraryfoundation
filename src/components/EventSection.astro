@@ -1,0 +1,306 @@
+---
+/**
+ * The 2026 fundraiser and its reservation form.
+ *
+ * Every detail is the foundation's own: the date, the venue, the price, the
+ * RSVP deadline. The countdown runs against that real deadline, which is the
+ * one piece of urgency this page has earned the right to show.
+ */
+import event from '../content/event.json';
+
+const UNITS = ['days', 'hours', 'minutes', 'seconds'];
+const SEAT_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10];
+---
+
+<section class="section event" id="event">
+  <div class="wrap">
+    <div class="grid">
+      <div class="left">
+        <header class="head reveal">
+          <span class="figno">Fig. 06</span>
+          <p class="eyebrow">{event.kicker}</p>
+          <h2>{event.name}</h2>
+        </header>
+
+        <p class="blurb reveal">{event.blurb}</p>
+
+        <dl class="facts reveal">
+          <div><dt>Date</dt><dd>{event.dateLabel}</dd></div>
+          <div><dt>Time</dt><dd>{event.timeLabel}</dd></div>
+          <div><dt>Where</dt><dd>{event.venue}<span class="thin">{event.venueAddress}</span></dd></div>
+          <div><dt>Admission</dt><dd>{event.priceLabel}</dd></div>
+        </dl>
+
+        <ul class="includes reveal">
+          {event.includes.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+
+      <div class="right">
+        <div class="clock reveal" data-deadline={event.rsvpBy}>
+          <p class="clock-label">Reservations close {event.rsvpByLabel}</p>
+          <div class="units">
+            {UNITS.map((u) => (
+              <div class="unit" data-unit={u}>
+                <span class="v" data-v>--</span>
+                <span class="u">{u}</span>
+              </div>
+            ))}
+          </div>
+          <p class="closed-note">
+            Reservations for this year have closed. Write to us and we will hold you a place next year.
+          </p>
+        </div>
+
+        <form
+          class="rsvp reveal"
+          name="reservation"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="company"
+          action="/thank-you/?kind=reservation"
+        >
+          <input type="hidden" name="form-name" value="reservation" />
+          <input type="hidden" name="event" value={`${event.name} ${event.year}`} />
+          <p class="hp" hidden><label>Do not fill this in <input name="company" /></label></p>
+
+          <p class="rsvp-title">Reserve your seats</p>
+
+          <div class="field">
+            <label for="r-name">Name</label>
+            <input id="r-name" name="name" autocomplete="name" required />
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="r-email">Email</label>
+              <input id="r-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="r-phone">Phone</label>
+              <input id="r-phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="r-seats">Seats</label>
+              <select id="r-seats" name="seats" data-seats>
+                {SEAT_OPTIONS.map((n) => (
+                  <option value={n} selected={n === 2}>{n}</option>
+                ))}
+              </select>
+            </div>
+            <div class="field">
+              <label for="r-diet">Dietary needs</label>
+              <input id="r-diet" name="dietary" placeholder="Optional" />
+            </div>
+          </div>
+
+          <p class="total">Total <strong data-total>${event.price * 2}</strong></p>
+          <button class="btn btn--ink" type="submit"><span>Request these seats</span></button>
+          <p class="fine">We will confirm by email and take payment at the door or by invoice.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const seats = document.querySelector<HTMLSelectElement>('[data-seats]');
+  const total = document.querySelector<HTMLElement>('[data-total]');
+  const PRICE = 150;
+  const update = () => {
+    if (!seats || !total) return;
+    total.textContent = `$${(Number(seats.value) * PRICE).toLocaleString('en-US')}`;
+  };
+  seats?.addEventListener('change', update);
+  update();
+</script>
+
+<style>
+  .event {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--rule);
+  }
+  .grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  @media (min-width: 980px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    }
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+    max-width: 14ch;
+  }
+  .blurb {
+    color: var(--text-soft);
+    max-width: 48ch;
+    margin-bottom: 1.8rem;
+  }
+  .facts {
+    margin: 0 0 1.6rem;
+    display: grid;
+    gap: 1px;
+    background: var(--rule);
+    border-block: 1px solid var(--rule);
+  }
+  @media (min-width: 600px) {
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .facts > div {
+    background: var(--paper-warm);
+    padding: 0.95rem 1rem 0.95rem 0;
+  }
+  @media (min-width: 600px) {
+    .facts > div:nth-child(even) {
+      padding-left: 1.2rem;
+    }
+  }
+  dt {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.2rem;
+  }
+  dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .thin {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--text-soft);
+  }
+  .includes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .includes li {
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--text-soft);
+  }
+
+  .clock {
+    border: 1px solid var(--rule);
+    border-bottom: 0;
+    padding: 1.3rem 1.5rem;
+    background: var(--paper);
+  }
+  .clock-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.9rem;
+  }
+  .units {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .unit {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .v {
+    font-family: var(--display);
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--civic);
+    font-variant-numeric: tabular-nums;
+  }
+  .u {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .closed-note {
+    display: none;
+    font-size: 0.9rem;
+    color: var(--text-soft);
+  }
+  /* If the deadline passes, say so instead of counting backwards. */
+  .clock[data-state='closed'] .units {
+    display: none;
+  }
+  .clock[data-state='closed'] .closed-note {
+    display: block;
+  }
+
+  .rsvp {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    display: grid;
+    gap: 1.1rem;
+  }
+  .rsvp-title {
+    font-family: var(--display);
+    font-size: 1.35rem;
+    letter-spacing: -0.015em;
+  }
+  .two {
+    display: grid;
+    gap: 1.1rem;
+  }
+  @media (min-width: 520px) {
+    .two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .total strong {
+    font-family: var(--display);
+    font-size: 1.7rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .fine {
+    font-size: 0.82rem;
+    color: var(--text-soft);
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+</style>

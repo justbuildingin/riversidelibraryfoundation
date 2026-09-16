@@ -1,0 +1,176 @@
+# Decap CMS, pointed at the same JSON files the site reads.
+#
+# There is no database and no server. An edit here is a commit to this
+# repository, which Netlify rebuilds, so the admin panel and the site can never
+# drift apart. It also means every change the staff make is in git history with
+# a name and a date on it, which for a non-profit board is the useful property.
+#
+# To switch it on: set backend.name to `git-gateway` below, then enable
+# Identity and Git Gateway on the Netlify site and invite the staff by email.
+# Until then `test-repo` runs the whole panel in the browser with no login, so
+# the board can click around it in the demo without anything being saved.
+
+backend:
+  name: test-repo
+  # name: git-gateway
+  # branch: master
+
+media_folder: public/images
+public_folder: /images
+
+site_url: /
+display_url: /
+logo_url: /images/seal.png
+
+collections:
+  - name: site
+    label: The foundation
+    files:
+      - name: site
+        label: Name, address and social links
+        file: src/content/site.json
+        fields:
+          - { name: name, label: Organisation name, widget: string }
+          - { name: shortName, label: Short name, widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - { name: missionShort, label: Mission, one sentence, widget: text }
+          - { name: missionLong, label: Mission, full, widget: text }
+          - name: address
+            label: Address
+            widget: object
+            fields:
+              - { name: line1, label: Street, widget: string }
+              - { name: city, label: City, widget: string }
+              - { name: state, label: State, widget: string }
+              - { name: zip, label: ZIP, widget: string }
+          - { name: email, label: Main email, widget: string }
+          - { name: boardEmail, label: Board email, widget: string }
+          - name: social
+            label: Social links
+            widget: list
+            fields:
+              - { name: name, label: Network, widget: string }
+              - { name: url, label: URL, widget: string }
+          - name: legacyProgram
+            label: Literary Legacy Program
+            widget: object
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: blurb, label: Description, widget: text }
+              - { name: years, label: Years, widget: number }
+          - name: campaign
+            label: Annual campaign
+            widget: object
+            fields:
+              - { name: year, label: Year, widget: string }
+              - { name: name, label: Campaign name, widget: string }
+              - { name: blurb, label: Description, widget: text }
+
+      - name: branches
+        label: The eight libraries
+        file: src/content/branches.json
+        fields:
+          - name: branches
+            label: Libraries
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: street, label: Street, widget: string }
+              - { name: phone, label: Phone, widget: string }
+              - { name: note, label: What the foundation did here, widget: text, required: false }
+              - { name: flagship, label: Main library, widget: boolean, default: false }
+
+      - name: impact
+        label: Impact figures
+        file: src/content/impact.json
+        fields:
+          - { name: intro, label: Intro line, widget: text }
+          - name: items
+            label: Headline figures
+            widget: list
+            fields:
+              - { name: figure, label: Number, widget: string }
+              - { name: prefix, label: Prefix, widget: string, required: false }
+              - { name: label, label: Label, widget: string }
+              - { name: detail, label: Detail, widget: text }
+          - name: programs
+            label: Programmes
+            widget: list
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: body, label: Body, widget: text }
+
+      - name: giving
+        label: Giving levels
+        file: src/content/giving.json
+        fields:
+          - { name: intro, label: Intro, widget: text }
+          - { name: note, label: Internal note, widget: text, required: false }
+          - name: tiers
+            label: Levels
+            widget: list
+            fields:
+              - { name: amount, label: One-time amount, widget: number }
+              - { name: monthly, label: Monthly amount, widget: number }
+              - { name: name, label: Level name, widget: string }
+              - { name: buys, label: What it buys, widget: string }
+              - { name: featured, label: Highlight this one, widget: boolean, default: false }
+          - name: legacy
+            label: Legacy programme block
+            widget: object
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: body, label: Body, widget: text }
+
+      - name: event
+        label: The annual fundraiser
+        file: src/content/event.json
+        fields:
+          - { name: name, label: Event name, widget: string }
+          - { name: year, label: Year, widget: string }
+          - { name: kicker, label: Kicker, widget: string }
+          - { name: date, label: Date and time, widget: datetime }
+          - { name: dateLabel, label: Date as written, widget: string }
+          - { name: timeLabel, label: Time as written, widget: string }
+          - { name: venue, label: Venue, widget: string }
+          - { name: venueAddress, label: Venue address, widget: string }
+          - { name: price, label: Price per person, widget: number }
+          - { name: priceLabel, label: Price as written, widget: string }
+          - { name: rsvpBy, label: Reservations close, widget: datetime }
+          - { name: rsvpByLabel, label: Closing date as written, widget: string }
+          - { name: blurb, label: Description, widget: text }
+          - { name: includes, label: What is included, widget: list, field: { name: item, label: Item, widget: string } }
+
+      - name: board
+        label: Board of directors
+        file: src/content/board.json
+        fields:
+          - name: officers
+            label: Officers
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: role, label: Role, widget: string }
+          - { name: directors, label: Directors, widget: list, field: { name: name, label: Name, widget: string } }
+          - name: assistant
+            label: Assistant to the board
+            widget: object
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: role, label: Role, widget: string }
+
+  - name: updates
+    label: News and updates
+    label_singular: Update
+    folder: src/content/updates
+    create: true
+    extension: json
+    format: json
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: '{{date}} — {{title}}'
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Headline, widget: string }
+      - { name: date, label: Date, widget: date, format: YYYY-MM-DD }
+      - { name: tag, label: Tag, widget: select, options: [Campaign, Event, Grant, Programme, Announcement] }
+      - { name: summary, label: Summary, widget: text }

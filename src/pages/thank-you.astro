@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../content/site.json';
+
+const kind = Astro.url.searchParams.get('kind') ?? 'message';
+const MESSAGES: Record<string, { title: string; body: string }> = {
+  donation: {
+    title: 'Thank you.',
+    body: 'Your gift intent has reached the foundation. Somebody will be in touch to complete it, and it will go to the Riverside Public Library.',
+  },
+  reservation: {
+    title: 'Your seats are requested.',
+    body: 'We will confirm by email before reservations close. Thank you for coming out for the library.',
+  },
+  newsletter: {
+    title: 'You are on the list.',
+    body: 'A few times a year, we will tell you what the money did. Nothing in between.',
+  },
+  contact: {
+    title: 'Message received.',
+    body: 'A member of the board will read this and reply.',
+  },
+};
+const message = MESSAGES[kind] ?? { title: 'Thank you.', body: 'We have your message.' };
+---
+
+<Base title={`${message.title} | ${site.name}`} description="Thank you.">
+  <section class="ty">
+    <div class="wrap">
+      <span class="figno">Riverside Public Library Foundation</span>
+      <h1>{message.title}</h1>
+      <p class="standfirst">{message.body}</p>
+      <a class="btn btn--ink" href="/"><span>Back to the foundation</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ty {
+    min-height: 78svh;
+    display: grid;
+    align-items: center;
+    padding-block: 10rem 5rem;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    margin: 0.8rem 0 1.2rem;
+  }
+  .btn {
+    margin-top: 2rem;
+  }
+</style>

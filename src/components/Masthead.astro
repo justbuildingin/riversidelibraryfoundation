@@ -1,0 +1,355 @@
+---
+/**
+ * Centred-seal navigation, and it is one composition with the hero rather than
+ * a bar sitting above it.
+ *
+ * The foundation has a real crest, so it goes where a crest goes: alone on the
+ * centre line, with the sections flanking it and the one action detached to the
+ * right. Over the hero it is transparent on the photograph; once the page moves
+ * it settles onto archival board. Institutions present themselves symmetrically;
+ * this is the one place the page is allowed to be.
+ */
+import site from '../content/site.json';
+
+interface Props {
+  /** Links that scroll to sections on the page. */
+  sections: { href: string; label: string }[];
+}
+const { sections } = Astro.props;
+const left = sections.slice(0, Math.ceil(sections.length / 2));
+const right = sections.slice(Math.ceil(sections.length / 2));
+---
+
+<header class="mast" data-mast>
+  <div class="mast-inner wrap">
+    <nav class="cols" aria-label="Main">
+      <ul class="side side--left">
+        {left.map((s) => (
+          <li><a href={s.href}>{s.label}</a></li>
+        ))}
+      </ul>
+
+      <a class="seal" href="/" aria-label={`${site.name}, home`}>
+        <span class="seal-img">
+          <img src="/images/seal.png" alt="" width="128" height="128" />
+          <!-- The sheen that sweeps across the seal once on load, the way light
+               moves over foil when a book is tilted. -->
+          <span class="sheen" data-sheen aria-hidden="true"></span>
+        </span>
+        <span class="seal-name">
+          <span class="seal-line-1">Riverside Public Library</span>
+          <span class="seal-line-2">Foundation</span>
+        </span>
+      </a>
+
+      <ul class="side side--right">
+        {right.map((s) => (
+          <li><a href={s.href}>{s.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="give" href="#give">Donate</a>
+
+    <button class="burger" type="button" data-burger aria-expanded="false" aria-controls="mast-drawer">
+      <span aria-hidden="true"></span>
+      <span class="sr-only">Menu</span>
+    </button>
+  </div>
+
+  <div class="drawer" id="mast-drawer" data-drawer hidden>
+    <ul>
+      {sections.map((s) => (
+        <li><a href={s.href} data-drawer-link>{s.label}</a></li>
+      ))}
+      <li><a class="drawer-give" href="#give" data-drawer-link>Donate</a></li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .mast {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    transition: background-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+  }
+  /* Settles onto archival board once the page has moved off the hero. */
+  :global(html.scrolled) .mast {
+    background: var(--ink);
+    box-shadow: 0 1px 0 var(--rule-ink);
+  }
+
+  .mast-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0.9rem;
+    transition: padding-block var(--fast) var(--ease);
+  }
+  :global(html.scrolled) .mast-inner {
+    padding-block: 0.55rem;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.6rem);
+    width: 100%;
+  }
+
+  .side {
+    display: flex;
+    gap: clamp(0.9rem, 2.2vw, 2rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .side--left {
+    justify-content: flex-end;
+  }
+  .side--right {
+    justify-content: flex-start;
+    /* The Donate action is absolutely placed, so the right column reserves
+       room for it rather than letting the links run underneath. */
+    padding-right: 7.5rem;
+  }
+  .side a {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--on-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    opacity: 0.82;
+    transition: opacity var(--fast) var(--ease), color var(--fast) var(--ease);
+  }
+  .side a:hover {
+    opacity: 1;
+    color: var(--brass-light);
+  }
+
+  .seal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: var(--on-ink);
+  }
+  .seal-img {
+    position: relative;
+    display: block;
+    width: clamp(48px, 5vw, 62px);
+    overflow: hidden;
+    border-radius: 50%;
+    transition: width var(--fast) var(--ease);
+    box-shadow: 0 2px 20px rgba(8, 23, 34, 0.6);
+  }
+  :global(html.scrolled) .seal-img {
+    width: 42px;
+  }
+  .seal-img img {
+    width: 100%;
+    height: auto;
+  }
+  .sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 32%,
+      rgba(255, 255, 255, 0.72) 47%,
+      rgba(255, 255, 255, 0.9) 50%,
+      transparent 66%
+    );
+    transform: translateX(-130%);
+    pointer-events: none;
+  }
+  .seal-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.08;
+    text-align: center;
+    /* The crest sits over whatever the hero photograph happens to be doing,
+       which here is a pale dome. The shadow is what guarantees the wordmark
+       reads before the page has scrolled onto its own ground. */
+    text-shadow: 0 1px 10px rgba(8, 23, 34, 0.95), 0 0 24px rgba(8, 23, 34, 0.7);
+  }
+  .seal-line-1 {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .seal-line-2 {
+    font-family: var(--display);
+    font-size: 0.78rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--brass-light);
+  }
+  /* Once the bar has its own dark ground the wordmark is redundant beside the
+     crest, and the shadow it needed over the photograph goes with it. */
+  :global(html.scrolled) .seal-name {
+    display: none;
+    text-shadow: none;
+  }
+
+  .give {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.62rem 1.3rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-deep);
+    background: var(--brass);
+    border-radius: 2px;
+    transition: background-color var(--fast) var(--ease);
+  }
+  .give:hover {
+    background: var(--brass-light);
+  }
+
+  .burger {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+  .burger span[aria-hidden] {
+    display: block;
+    width: 24px;
+    height: 1px;
+    margin-inline: auto;
+    background: var(--on-ink);
+    position: relative;
+  }
+  .burger span[aria-hidden]::before,
+  .burger span[aria-hidden]::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 1px;
+    background: var(--on-ink);
+    transition: transform var(--fast) var(--ease);
+  }
+  .burger span[aria-hidden]::before {
+    top: -7px;
+  }
+  .burger span[aria-hidden]::after {
+    top: 7px;
+  }
+  .burger[aria-expanded='true'] span[aria-hidden] {
+    background: transparent;
+  }
+  .burger[aria-expanded='true'] span[aria-hidden]::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .burger[aria-expanded='true'] span[aria-hidden]::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .drawer {
+    background: var(--ink);
+    border-top: 1px solid var(--rule-ink);
+  }
+  .drawer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem var(--gutter) 1.4rem;
+  }
+  .drawer a {
+    display: block;
+    padding: 0.85rem 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--on-ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-ink);
+  }
+  .drawer-give {
+    color: var(--brass-light) !important;
+  }
+
+  /* A centred crest cannot carry six links on a phone, so below this width the
+     sections move into a drawer and only the crest and the action remain. */
+  @media (max-width: 1000px) {
+    .side {
+      display: none;
+    }
+    .cols {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .give {
+      display: none;
+    }
+    .burger {
+      display: block;
+    }
+    :global(html.scrolled) .seal-name {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const mast = document.querySelector<HTMLElement>('[data-mast]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]');
+
+  const onScroll = () => {
+    document.documentElement.classList.toggle('scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  if (burger && drawer) {
+    const setOpen = (open: boolean) => {
+      burger.setAttribute('aria-expanded', String(open));
+      drawer.hidden = !open;
+    };
+    burger.addEventListener('click', () => setOpen(drawer.hidden));
+    drawer.querySelectorAll('[data-drawer-link]').forEach((a) =>
+      a.addEventListener('click', () => setOpen(false)),
+    );
+    // A drawer left open across a resize into the desktop layout strands the
+    // close control, because the burger itself is display:none up there.
+    window.matchMedia('(min-width: 1001px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+
+  // Anchor links land under a fixed masthead unless the offset is applied.
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href')!.slice(1);
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - (mast?.offsetHeight ?? 0) - 8;
+      window.scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  });
+</script>

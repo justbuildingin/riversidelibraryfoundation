@@ -1,0 +1,340 @@
+/*
+  Riverside Public Library Foundation.
+
+  Material: library buckram and foil stamping, on the mount board of an archival
+  photographic plate. Both accents are sampled from the foundation's own seal,
+  so the palette is theirs rather than one picked to suit a mood.
+*/
+
+:root {
+  --ink: #0d2233;
+  --ink-deep: #081722;
+  --ink-soft: #1b3346;
+  --civic: #005696;
+  --civic-light: #3c86bf;
+  --citrus: #c2d832;
+  --brass: #b08d4f;
+  --brass-light: #d3b273;
+
+  --paper: #f2eee2;
+  --paper-warm: #e8e2d2;
+  --white: #fbf9f4;
+
+  --text: #16232e;
+  --text-soft: #4d5c68;
+  --on-ink: #f2eee2;
+  --on-ink-soft: #a9bccb;
+
+  --rule: rgba(22, 35, 46, 0.16);
+  --rule-ink: rgba(242, 238, 226, 0.22);
+
+  --display: 'Fraunces Variable', 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Public Sans Variable', 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* One easing token for the whole site. Institutions do not bounce. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --fast: 200ms;
+  --slow: 620ms;
+
+  --wrap: 1220px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Lenis owns scrolling; a CSS smooth scroll on top of it stutters. */
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  margin: 0;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+img[width][height] {
+  height: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.wrap {
+  width: min(100% - (var(--gutter) * 2), var(--wrap));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+/* ---------------------------------------------------------- editorial ---- */
+
+/* The letterspaced metadata label that sits above almost every section. */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* Figure numbers, the way a plate is numbered in a printed report. */
+.figno {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+  font-variant-numeric: tabular-nums;
+}
+
+.standfirst {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 2.6vw, 1.85rem);
+  line-height: 1.34;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 34ch;
+}
+
+.prose p + p {
+  margin-top: 1.05rem;
+}
+
+.prose {
+  color: var(--text-soft);
+  max-width: 62ch;
+}
+
+/* The hairline that carries the whole editorial grid. */
+.rule {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+  margin: 0;
+}
+
+.rule--ink {
+  background: var(--rule-ink);
+}
+
+/* ----------------------------------------------------------- controls ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 0;
+  border-radius: 2px;
+  padding: 1rem 1.9rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease),
+    box-shadow var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+
+.btn--brass {
+  background: var(--brass);
+  color: var(--ink-deep);
+}
+
+.btn--brass:hover {
+  background: var(--brass-light);
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.btn--ink:hover {
+  background: var(--ink-soft);
+}
+
+.btn--outline {
+  background: transparent;
+  color: currentColor;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.btn--outline:hover {
+  background: currentColor;
+}
+
+/* The label has to flip to the ground colour when the fill arrives. */
+.btn--outline:hover > span {
+  color: var(--ink);
+}
+
+.btn--outline-ink:hover > span {
+  color: var(--paper);
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--sans);
+  font-size: 1rem;
+  padding: 0.85rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: var(--text);
+  border-radius: 0;
+  transition: border-color var(--fast) var(--ease);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--civic);
+}
+
+.field--ink label {
+  color: var(--on-ink-soft);
+}
+
+.field--ink input,
+.field--ink select,
+.field--ink textarea {
+  color: var(--on-ink);
+  border-bottom-color: var(--rule-ink);
+}
+
+.field--ink input:focus,
+.field--ink textarea:focus {
+  border-bottom-color: var(--citrus);
+}
+
+:focus-visible {
+  outline: 2px solid var(--civic);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------- motion ---- */
+
+/*
+  Reveals default to VISIBLE and are only hidden once script confirms it is
+  running, so the page is complete with JavaScript off.
+*/
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+html.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal,
+  html.js .reveal.is-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: 0.75rem 1.2rem;
+  text-decoration: none;
+  font-weight: 700;
+  transition: top var(--fast) var(--ease);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}

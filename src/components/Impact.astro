@@ -1,0 +1,133 @@
+---
+/**
+ * What the foundation has actually done. Every figure here is a claim taken
+ * from the foundation's own site, not an estimate: the $200,000 toward Orange
+ * Terrace, the Storymobile, the eight libraries, the five-year programme.
+ */
+import impact from '../content/impact.json';
+---
+
+<section class="section impact" id="impact">
+  <div class="wrap">
+    <header class="head reveal">
+      <span class="figno">Fig. 02</span>
+      <h2>What the money has already built</h2>
+    </header>
+
+    <ul class="figures" data-reveal-group>
+      {impact.items.map((item, i) => (
+        <li class="fig reveal">
+          <span class="n" data-count={item.figure} data-prefix={item.prefix}>{item.prefix}{Number(item.figure).toLocaleString('en-US')}</span>
+          <span class="l">{item.label}</span>
+          <span class="d">{item.detail}</span>
+          <span class="idx" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="programs" data-reveal-group>
+      {impact.programs.map((p) => (
+        <article class="program reveal">
+          <h3>{p.title}</h3>
+          <p>{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .impact {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--rule);
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: clamp(2rem, 5vw, 3.4rem);
+  }
+  .head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+    max-width: 18ch;
+  }
+
+  .figures {
+    list-style: none;
+    margin: 0 0 clamp(2.4rem, 6vw, 4rem);
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--rule);
+    border-block: 1px solid var(--rule);
+  }
+  @media (min-width: 760px) {
+    .figures {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .fig {
+    position: relative;
+    background: var(--paper-warm);
+    padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.2rem, 2vw, 1.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .n {
+    font-family: var(--display);
+    font-size: clamp(2.3rem, 4.6vw, 3.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--civic);
+    font-variant-numeric: tabular-nums;
+  }
+  .l {
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+  .d {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .idx {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--brass);
+    opacity: 0.7;
+  }
+
+  .programs {
+    display: grid;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  @media (min-width: 680px) {
+    .programs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .program {
+    background: var(--paper-warm);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    transition: background-color var(--fast) var(--ease);
+  }
+  .program:hover {
+    background: var(--paper);
+  }
+  .program h3 {
+    font-size: 1.22rem;
+    margin-bottom: 0.5rem;
+  }
+  .program p {
+    color: var(--text-soft);
+    font-size: 0.97rem;
+  }
+</style>
