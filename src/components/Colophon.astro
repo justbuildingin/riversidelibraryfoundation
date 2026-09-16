@@ -23,7 +23,10 @@ import site from '../content/site.json';
           {site.address.line1}<br />
           {site.address.city}, {site.address.state} {site.address.zip}
         </address>
-        <p class="note">The Main Library, and the foundation's address.</p>
+        <p class="note">
+          Our mailing address. For library hours and services, visit the
+          <a href={site.libraryUrl} rel="noopener noreferrer" target="_blank">Riverside Public Library</a>.
+        </p>
       </div>
 
       <div class="block">

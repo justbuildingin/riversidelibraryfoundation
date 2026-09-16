@@ -1,10 +1,11 @@
 ---
 /**
- * The eight. Every name and address comes from the City of Riverside's own
- * listing, because naming a real institution's branches wrongly is the kind of
- * error a shareholder spots immediately.
+ * The eight libraries the foundation supports. Every name and address comes from
+ * the City of Riverside's own listing. No phone numbers: this is the foundation's
+ * site, not the library's, so hours and services go to the library's own site.
  */
 import branches from '../content/branches.json';
+import site from '../content/site.json';
 ---
 
 <section class="section libraries" id="libraries">
@@ -18,10 +19,11 @@ import branches from '../content/branches.json';
   <div class="wrap inner">
     <header class="head reveal">
       <span class="figno">Fig. 04</span>
-      <h2>Eight libraries, one city</h2>
+      <h2>The eight libraries we support</h2>
       <p class="prose sub">
-        The foundation raises for all of them. Not a headquarters and seven afterthoughts: the
-        branch closest to a child is the one that decides whether they read.
+        The foundation raises funds for every City of Riverside library, not only the Main Library.
+        We are not the library: for hours, library cards and programs, visit the
+        <a href={site.libraryUrl} rel="noopener noreferrer" target="_blank">Riverside Public Library</a>.
       </p>
     </header>
 
@@ -31,7 +33,6 @@ import branches from '../content/branches.json';
           <span class="num">{String(i + 1).padStart(2, '0')}</span>
           <span class="name">{b.name}</span>
           <span class="addr">{b.street}</span>
-          <span class="tel"><a href={`tel:+1${b.phone.replace(/\D/g, '')}`}>{b.phone}</a></span>
           {b.note ? <span class="note">{b.note}</span> : <span class="note" aria-hidden="true"></span>}
         </li>
       ))}
@@ -103,7 +104,7 @@ import branches from '../content/branches.json';
   }
   @media (min-width: 880px) {
     .row {
-      grid-template-columns: 3.2rem minmax(0, 1.25fr) minmax(0, 1fr) 9rem;
+      grid-template-columns: 3.2rem minmax(0, 1.25fr) minmax(0, 1fr);
       gap: 1.5rem;
       align-items: center;
     }
@@ -128,14 +129,11 @@ import branches from '../content/branches.json';
     font-size: 0.92rem;
     color: var(--on-ink-soft);
   }
-  .tel a {
-    font-size: 0.92rem;
-    color: var(--on-ink-soft);
-    text-decoration: none;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+  .sub a {
+    color: var(--white);
+    text-underline-offset: 0.2em;
   }
-  .tel a:hover {
+  .sub a:hover {
     color: var(--brass-light);
   }
   .note {

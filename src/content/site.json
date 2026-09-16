@@ -2,8 +2,9 @@
   "name": "Riverside Public Library Foundation",
   "shortName": "RPLF",
   "tagline": "Guardians of a public education",
-  "missionShort": "The Riverside Public Library is not only about books and digital materials, it is the CENTER for lifelong learning.",
-  "missionLong": "The Riverside Public Library Foundation raises funds to ensure the excellence of library services for Riverside residents. Take a moment to explore the things we have done for residents and Riverside libraries. Then help us by donating.",
+  "missionShort": "The Riverside Public Library Foundation raises funds to ensure the excellence of library services for Riverside residents.",
+  "missionLong": "We are a fundraising foundation, separate from the Riverside Public Library itself. We do not run the libraries. We raise the money that helps them do more: new books and e-materials, story time kits, homework help, computers, and the buildings and rooms people use every day.",
+  "libraryUrl": "https://riversideca.gov/library/",
   "address": {
     "line1": "3900 Mission Inn Avenue",
     "city": "Riverside",

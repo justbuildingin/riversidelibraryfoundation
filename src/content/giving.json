@@ -1,5 +1,5 @@
 {
-  "intro": "Every gift goes to the Riverside Public Library. The foundation exists to make sure it gets there.",
+  "intro": "Your gift goes to the foundation, and the foundation puts it to work across Riverside's eight public libraries.",
   "note": "Suggested amounts for this demo. The foundation's published giving levels should replace these before launch.",
   "tiers": [
     { "amount": 25,  "monthly": 5,   "name": "Borrower",    "buys": "A new picture book on a branch shelf" },
